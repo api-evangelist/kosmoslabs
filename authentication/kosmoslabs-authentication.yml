@@ -1,0 +1,94 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview and
+  https://docs.kosmoslabs.ai/product-documentation/integration-permissions — Kosmos publishes no
+  OpenAPI, so this profile is transcribed from the documentation and confirmed against a live
+  unauthenticated probe of the ingest endpoint.
+docs: https://docs.kosmoslabs.ai/product-documentation/integration-permissions
+description: >-
+  Kosmos AI Labs exposes one authenticated public API — the OTLP ingest endpoint — secured with a
+  static API key in a custom header. There is no public OAuth authorization server, no
+  /.well-known/openid-configuration and no token endpoint of its own; OAuth appears only on the
+  inbound side, where Kosmos acts as an OAuth *client* against the third-party systems a customer
+  connects.
+
+summary:
+  types:
+  - apiKey
+  oauth_authorization_server: false
+  openid_connect: false
+  mutual_tls: false
+
+schemes:
+- name: kosmosApiKey
+  type: apiKey
+  in: header
+  header_name: X-Kosmos-API-Key
+  key_prefix: kos_
+  description: >-
+    API key generated in Kosmos platform settings and sent on every OTLP request. Keys are
+    prefixed kos_.
+  applies_to:
+  - https://ingest.kosmoslabs.ai/v1/traces
+  - https://ingest.kosmoslabs.ai/v1/metrics
+  - https://ingest.kosmoslabs.ai/v1/logs
+  transport:
+  - OTLP over HTTP (primary)
+  - OTLP over gRPC (alternative; header passed as gRPC metadata)
+  verified:
+    probe: POST https://ingest.kosmoslabs.ai/v1/traces with no key
+    status: 401
+    body: '{"code":401,"message":"missing API key"}'
+    probed: '2026-07-19'
+  source: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+
+# Kosmos as an OAuth CLIENT against customer-connected systems. These are not Kosmos's own
+# scopes — they are the read-only permissions Kosmos requests when a customer connects a system.
+# Captured verbatim from the Integration Permissions page.
+integration_authorization:
+  default_posture: Read-only integration scopes by default; OAuth 2.0 where the vendor supports it.
+  docs: https://docs.kosmoslabs.ai/product-documentation/integration-permissions
+  systems:
+  - system: Salesforce Service Cloud
+    auth: OAuth (managed package installation required)
+    permissions: [Read Cases, Read Case Comments, Read Case History, Read Incidents, Read Users]
+  - system: Jira
+    auth: OAuth 2.0
+    permissions: [Read Issues, Read Projects, Read Comments]
+    optional_permissions: [Write Issues]
+  - system: GitHub
+    auth: OAuth
+    permissions: [Read Commits, Read Pull Requests, 'Read Repositories (metadata)']
+  - system: Bitbucket
+    auth: OAuth
+    permissions: [Read Commits, Read Pull Requests, 'Read Repositories (metadata)']
+  - system: ServiceNow
+    auth: OAuth (supports custom field mapping)
+    permissions: [Read Incidents, Read Change Requests]
+  - system: Zendesk
+    auth: OAuth
+    permissions: [Read Tickets, Read Custom Fields]
+  - system: Linear
+    auth: OAuth 2.0
+    permissions: [Issues, State, Labels, Teams, Assignees, Relations, Attachments]
+    optional_permissions: [Comments]
+  - system: Azure DevOps
+    auth: OAuth 2.0 via Microsoft Entra
+    permissions: [Work Items, Work Item Types, Projects, Teams]
+    optional_permissions: [Comments]
+  - system: Pylon
+    auth: API key authentication
+    permissions: [Read Issues]
+    optional_permissions: [Read Messages]
+  - system: OpenTelemetry
+    auth: API key authentication (generated in Kosmos settings)
+    permissions: [Traces ingestion, Logs ingestion, Metrics ingestion]
+  - system: Slack / Microsoft Teams
+    auth: OAuth / webhook authorization
+    permissions: [Post Messages]
+    note: Delivery channel only, not a signal source.
+
+transport_security:
+  tls: TLS 1.2+ for data in transit
+  source: https://kosmoslabs.ai/resources/security/

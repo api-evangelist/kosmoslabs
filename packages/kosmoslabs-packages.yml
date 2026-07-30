@@ -1,0 +1,57 @@
+generated: '2026-07-19'
+method: none
+source: >-
+  Registry probes on 2026-07-19 (npm, PyPI) plus review of docs.kosmoslabs.ai and
+  https://kosmoslabs.ai/product/integrations/
+description: >-
+  No first-party Kosmos client libraries, SDKs or CLIs were found in any package registry or
+  linked from the documentation. This is consistent with the shape of the product: the only public
+  API is an OTLP endpoint, and customers integrate using the standard OpenTelemetry Collector or
+  their existing vendor agent rather than a Kosmos-authored SDK.
+
+packages: []
+
+registries_searched:
+- registry: npm
+  probed: ['kosmoslabs', '@kosmoslabs/sdk', 'kosmos-labs']
+  result: 404 — no package
+- registry: PyPI
+  probed: ['kosmoslabs', 'kosmos-labs']
+  result: 404 — no package
+- registry: Maven Central
+  result: no first-party artifact found
+- registry: NuGet
+  result: no first-party artifact found
+- registry: pkg.go.dev
+  result: no first-party module found
+- registry: RubyGems
+  result: no first-party gem found
+- registry: Packagist
+  result: no first-party package found
+- registry: crates.io
+  result: no first-party crate found
+
+docs_reviewed:
+- https://docs.kosmoslabs.ai/llms.txt
+- https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+- https://kosmoslabs.ai/product/integrations/
+note: >-
+  The documentation does not link a GitHub organization. Three plausible GitHub namespaces
+  (kosmoslabs, kosmos-labs, kosmosai) resolve, but none is claimed by Kosmos AI Labs on its own
+  site or docs, so no GitHubOrganization pointer is asserted.
+
+third_party_clients:
+  note: >-
+    Ingest is performed with standard, non-Kosmos software. Documentation supplies drop-in
+    exporter configuration for these; they are third-party OpenTelemetry tooling, not Kosmos
+    packages, and are listed for integration context only.
+  tooling:
+  - OpenTelemetry Collector (otlphttp exporter)
+  - Grafana Agent
+  - Splunk
+  - Datadog
+  - Dynatrace
+  - AWS Distro for OpenTelemetry (ADOT)
+  - Google Cloud Ops
+  - Azure Monitor
+  - New Relic

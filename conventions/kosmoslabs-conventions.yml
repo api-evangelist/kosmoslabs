@@ -1,0 +1,103 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview,
+  https://docs.kosmoslabs.ai/product-documentation/integration-limits, plus a live probe of
+  https://ingest.kosmoslabs.ai
+description: >-
+  Cross-cutting runtime semantics for the Kosmos OTLP ingest API. Kosmos does not operate a
+  general-purpose REST API; its one public surface is a standards-based OpenTelemetry Protocol
+  collector, so most conventions are inherited from the OTLP specification rather than invented
+  by Kosmos. Fields Kosmos does not document are recorded as null rather than guessed.
+
+base_url: https://ingest.kosmoslabs.ai
+api_style: >-
+  OpenTelemetry Protocol (OTLP) over HTTP — protobuf/JSON payloads POSTed to signal-specific
+  paths. gRPC is offered as an alternative transport.
+
+endpoints:
+- path: /v1/traces
+  method: POST
+  signal: traces
+- path: /v1/metrics
+  method: POST
+  signal: metrics
+- path: /v1/logs
+  method: POST
+  signal: logs
+
+method_semantics:
+  verified: GET on a signal path returns 405; only POST is accepted.
+  probed: '2026-07-19'
+
+authentication:
+  scheme: API key in the X-Kosmos-API-Key request header
+  key_format: kos_ prefix
+  docs: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+  detail: authentication/kosmoslabs-authentication.yml
+
+idempotency:
+  supported: null
+  note: >-
+    Kosmos publishes no idempotency-key contract for the ingest API. OTLP itself defines
+    at-least-once delivery with client-side retry, so duplicate submission is possible and is not
+    deduplicated by a documented key. Not asserted either way.
+
+pagination:
+  applicable: false
+  note: Ingest-only API; there is no read/list surface to paginate.
+
+versioning:
+  style: path segment
+  current: v1
+  note: >-
+    The /v1/ segment is the OTLP signal-path convention, not a Kosmos-specific version scheme.
+    Kosmos publishes no separate API version header or dated version policy.
+
+error_envelope:
+  format: JSON object (not RFC 9457 application/problem+json)
+  fields:
+    code: integer, mirrors the HTTP status
+    message: human-readable string
+  example: '{"code":401,"message":"missing API key"}'
+  verified: Observed on an unauthenticated POST to /v1/traces on 2026-07-19.
+  detail: errors/kosmoslabs-problem-types.yml
+
+rate_limiting:
+  documented: true
+  request_rate: 1,000 requests per minute per customer
+  payload_size: 5 MB per request
+  response_headers: null
+  note: Limits are published in the docs; Kosmos does not document rate-limit response headers.
+  detail: rate-limits/kosmoslabs-rate-limits.yml
+
+data_retention:
+  raw_signals: 7 days (raw traces, logs and metrics)
+  correlation_cadence: 15 minutes
+  source: https://docs.kosmoslabs.ai/product-documentation/integration-limits
+
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented for the ingest API.
+
+compatible_exporters:
+  note: >-
+    Documentation provides drop-in exporter configuration for these collectors/agents, all
+    pointing at the same OTLP endpoint.
+  agents:
+  - Generic OpenTelemetry Collector (otlphttp exporter)
+  - Grafana Agent (gRPC)
+  - Splunk
+  - Datadog
+  - Dynatrace
+  - AWS Distro for OpenTelemetry (ADOT)
+  - Google Cloud Ops
+  - Azure Monitor
+  - New Relic
+
+cross_references:
+  errors: errors/kosmoslabs-problem-types.yml
+  lifecycle: lifecycle/kosmoslabs-lifecycle.yml
+  authentication: authentication/kosmoslabs-authentication.yml
+  rate_limits: rate-limits/kosmoslabs-rate-limits.yml
+  conformance: conformance/kosmoslabs-conformance.yml

@@ -1,0 +1,63 @@
+generated: '2026-07-19'
+method: probed
+source: >-
+  Live probe of https://ingest.kosmoslabs.ai/v1/traces on 2026-07-19. Kosmos publishes no OpenAPI
+  and no error reference page, so this catalog records only responses observed directly against
+  the live endpoint plus the status semantics OTLP defines.
+description: >-
+  Error envelope and observed error responses for the Kosmos OTLP ingest API. Kosmos does NOT use
+  RFC 9457 application/problem+json; it returns a flat JSON object with integer `code` and string
+  `message`. Only verified entries are listed — no error codes are inferred or invented.
+
+format: custom-json
+problem_json: false
+content_type: application/json
+
+envelope:
+  fields:
+    code:
+      type: integer
+      description: Mirrors the HTTP status code.
+    message:
+      type: string
+      description: Human-readable explanation.
+  example: '{"code":401,"message":"missing API key"}'
+
+errors:
+- status: 401
+  code: 401
+  message: missing API key
+  title: Missing API key
+  cause: >-
+    The request carried no X-Kosmos-API-Key header, or the header was empty.
+  remediation: >-
+    Generate an API key in Kosmos platform settings and send it as the X-Kosmos-API-Key request
+    header on every OTLP request. Keys are prefixed kos_.
+  verified: true
+  observed: '2026-07-19'
+  observed_on: POST https://ingest.kosmoslabs.ai/v1/traces
+
+- status: 405
+  title: Method not allowed
+  cause: >-
+    A non-POST method was used against an OTLP signal path. The ingest endpoints accept POST only.
+  remediation: Send OTLP payloads with POST.
+  verified: true
+  observed: '2026-07-19'
+  observed_on: GET https://ingest.kosmoslabs.ai/v1/traces, /v1/metrics, /v1/logs
+
+- status: 404
+  title: Not found
+  cause: >-
+    A path other than /v1/traces, /v1/metrics or /v1/logs was requested on the ingest host.
+  remediation: Post to a documented OTLP signal path.
+  verified: true
+  observed: '2026-07-19'
+  observed_on: GET https://ingest.kosmoslabs.ai/
+
+undocumented:
+  note: >-
+    Kosmos publishes no error reference. Responses for oversized payloads (>5 MB), exceeded rate
+    limits (>1,000 req/min) and malformed OTLP bodies are not documented and were not probed
+    (probing them would require authenticated traffic). They are omitted rather than guessed.
+  related: rate-limits/kosmoslabs-rate-limits.yml

@@ -1,0 +1,85 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview,
+  https://docs.kosmoslabs.ai/product-documentation/integration-permissions,
+  https://kosmoslabs.ai/resources/security/, plus live probes of https://ingest.kosmoslabs.ai
+description: >-
+  Which industry and cross-cutting standards the Kosmos public surface conforms to. Each entry
+  records a boolean and the evidence behind it; a false value means the standard is genuinely not
+  implemented or not published, not that it was unexamined.
+
+standards:
+- id: otlp
+  name: OpenTelemetry Protocol
+  conforms: true
+  evidence: >-
+    Kosmos operates a standards-compliant OTLP collector at https://ingest.kosmoslabs.ai exposing
+    the canonical /v1/traces, /v1/metrics and /v1/logs signal paths over OTLP/HTTP, with gRPC as
+    an alternative transport. Documentation supplies drop-in exporter configuration for the
+    upstream OpenTelemetry Collector and eight vendor agents (Grafana, Splunk, Datadog,
+    Dynatrace, AWS ADOT, Google Cloud Ops, Azure Monitor, New Relic), which only works against a
+    conformant OTLP receiver.
+  source: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  role: client
+  evidence: >-
+    Kosmos authenticates to connected systems as an OAuth 2.0 client with read-only scopes by
+    default — Jira, Linear and Azure DevOps (via Microsoft Entra) are documented as OAuth 2.0;
+    Salesforce, GitHub, Bitbucket, ServiceNow and Zendesk as OAuth. Kosmos does NOT operate an
+    OAuth authorization server of its own.
+  source: https://docs.kosmoslabs.ai/product-documentation/integration-permissions
+
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: >-
+    No /.well-known/openid-configuration on kosmoslabs.ai, docs.kosmoslabs.ai, app.kosmoslabs.ai
+    or ingest.kosmoslabs.ai (all 404, probed 2026-07-19). Azure DevOps integration rides Microsoft
+    Entra, but Kosmos publishes no OIDC provider surface of its own.
+
+- id: rfc9457
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    The ingest API returns a flat JSON envelope {"code":401,"message":"missing API key"} with
+    Content-Type application/json, not application/problem+json.
+  detail: errors/kosmoslabs-problem-types.yml
+
+- id: idempotency
+  name: Idempotency keys
+  conforms: false
+  evidence: >-
+    No idempotency-key header or deduplication contract is documented for the ingest API.
+
+- id: pagination
+  name: Pagination
+  conforms: false
+  applicable: false
+  evidence: Ingest-only public API; there is no read/list surface to paginate.
+
+- id: soc2
+  name: SOC 2
+  conforms: false
+  status: in-progress
+  evidence: >-
+    'SOC 2 Type 1 targeted Audit engaged · Jun 2026' — an engagement is published, but no
+    completed report or attestation is available. Recorded as in-progress, not conformant.
+  source: https://kosmoslabs.ai/resources/security/
+  detail: security/kosmoslabs-trust-center.yml
+
+- id: tls12
+  name: TLS 1.2+ in transit
+  conforms: true
+  evidence: '"TLS 1.2+" published for data in transit; confirmed by live HTTPS probes.'
+  source: https://kosmoslabs.ai/resources/security/
+  detail: security/kosmoslabs-domain-security.yml
+
+not_applicable:
+  note: >-
+    The following standards were considered and are out of domain for an operational-intelligence
+    platform with an observability ingest API.
+  standards: [fhir, fapi, scim, odata, psd2, 'json:api']

@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.kosmoslabs.ai/product-documentation/integration-limits
+docs: https://docs.kosmoslabs.ai/product-documentation/integration-limits
+description: >-
+  Published limits for the Kosmos platform. Two distinct classes appear: limits Kosmos enforces on
+  its own OTLP ingest API, and sync/pagination ceilings Kosmos applies when polling third-party
+  systems on a customer's behalf. Both are recorded verbatim; Kosmos documents no rate-limit
+  response headers.
+
+api_limits:
+- api: Kosmos OTLP Ingest API
+  base_url: https://ingest.kosmoslabs.ai
+  request_rate: 1000
+  request_rate_window: minute
+  request_rate_scope: per customer
+  max_payload_bytes: 5242880
+  max_payload_human: 5 MB per request
+  retention: 7 days (raw traces, logs, metrics)
+  correlation_cadence: 15 minutes
+  status: Preview
+  response_headers: null
+
+integration_sync_limits:
+  note: >-
+    Ceilings Kosmos applies when reading from connected systems. These constrain how much of a
+    customer's data Kosmos ingests per sync cycle; several also reflect the upstream vendor's own
+    API rate limit.
+  systems:
+  - system: GitHub
+    repositories_displayed: 50 (adjustable)
+    max_items_per_sync: 10000 (across all repos)
+    items_per_repository: 500 per sync cycle
+    commits_per_repo: 500 (most recent)
+    pull_requests_per_repo: 200 (most recent)
+    upstream_api_rate_limit: ~5,000/hour
+  - system: Bitbucket
+    repositories_displayed: 200+ (paginated)
+    commits_per_repo: 500 (most recent)
+    pull_requests_per_repo: 200 (most recent)
+  - system: Jira
+    max_results_per_query: 5000
+    page_size: 100 per API request
+    max_projects: 100 in configuration screen
+  - system: Salesforce
+    max_records_per_sync: 5000 (cases, incidents)
+    batch_size: 200 per API request
+  - system: ServiceNow
+    max_records_per_sync: 5000 (incidents, change requests)
+    page_size: 100 per API request
+  - system: Zendesk
+    max_tickets_per_sync: 5000
+    page_size: 100 per API request
+  - system: Pylon
+    max_issues_per_sync: 5000
+    message_enrichment: Opt-in, configurable
+  - system: Linear
+    max_issues_per_sync: 5000 (most recent)
+    page_size: 50 per GraphQL request
+    comments_per_issue: 20 (most recent, when enabled)
+  - system: Azure DevOps
+    max_work_items_per_sync: 5000 (most recent)
+    batch_size: 200 per API request
+    max_projects_displayed: 100
+    comments_per_issue: 20 (most recent, when enabled)

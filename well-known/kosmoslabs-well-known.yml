@@ -1,0 +1,106 @@
+generated: '2026-07-19'
+method: probed
+source: Direct HTTP probes on 2026-07-19
+description: >-
+  Result of probing every Kosmos host for standard /.well-known/ discovery documents. Kosmos
+  publishes none — every probe returned 404. This is a valid, expected result and is recorded as
+  evidence rather than absence.
+
+probed: '2026-07-19'
+hosts:
+- kosmoslabs.ai
+- docs.kosmoslabs.ai
+- app.kosmoslabs.ai
+- ingest.kosmoslabs.ai
+
+found: []
+
+results:
+- host: kosmoslabs.ai
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: kosmoslabs.ai
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: kosmoslabs.ai
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: kosmoslabs.ai
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: kosmoslabs.ai
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: docs.kosmoslabs.ai
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: docs.kosmoslabs.ai
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: docs.kosmoslabs.ai
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: docs.kosmoslabs.ai
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: docs.kosmoslabs.ai
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: app.kosmoslabs.ai
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: app.kosmoslabs.ai
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: app.kosmoslabs.ai
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: app.kosmoslabs.ai
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: app.kosmoslabs.ai
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: ingest.kosmoslabs.ai
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+
+adjacent_probes:
+  note: >-
+    Common spec-discovery paths were probed at the same time; none served a machine-readable API
+    description.
+  results:
+  - url: https://kosmoslabs.ai/openapi.json
+    status: 404
+  - url: https://docs.kosmoslabs.ai/openapi.json
+    status: 404
+  - url: https://app.kosmoslabs.ai/openapi.json
+    status: 404
+  - url: https://ingest.kosmoslabs.ai/openapi.json
+    status: 404
+  - url: https://kosmoslabs.ai/asyncapi.yaml
+    status: 403
+  - url: https://docs.kosmoslabs.ai/asyncapi.yaml
+    status: 404
+  - url: https://app.kosmoslabs.ai/asyncapi.yaml
+    status: 404
+  - url: https://docs.kosmoslabs.ai/llms.txt
+    status: 200
+    file: llms/kosmoslabs-llms.txt
+    note: The one machine-readable discovery document Kosmos does publish; saved verbatim.

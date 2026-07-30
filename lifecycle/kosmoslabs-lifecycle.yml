@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview,
+  https://docs.kosmoslabs.ai/llms.txt, plus probes of kosmoslabs.ai for /status and /changelog
+description: >-
+  Versioning, release-stage, deprecation and operational-transparency posture for the Kosmos
+  public API surface. Kosmos is early-stage: its one public API is labelled Preview, and it
+  publishes neither a status page, a changelog, nor a deprecation policy. Absences are recorded
+  as false/null rather than omitted.
+
+versioning:
+  scheme: path segment (/v1/)
+  current_version: v1
+  note: >-
+    The /v1/ segment follows the OTLP signal-path convention rather than a Kosmos-authored version
+    policy. No API version header, no dated version pinning, no documented version-negotiation.
+  policy_published: false
+
+release_stages:
+- api: Kosmos OTLP Ingest API
+  stage: Preview
+  evidence: >-
+    Documented as "Connecting OpenTelemetry (Preview)" in the docs index and page title.
+  source: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+  stability_commitment: null
+
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594_support: false
+  notice_period: null
+  evidence: >-
+    No deprecation or sunset policy is published anywhere on kosmoslabs.ai or
+    docs.kosmoslabs.ai. No RFC 8594 Sunset / Deprecation headers are documented.
+  deprecated_operations: []
+
+status_page:
+  published: false
+  url: null
+  evidence: >-
+    https://kosmoslabs.ai/status returns 404 (probed 2026-07-19); no status subdomain or
+    third-party status page (Statuspage/Instatus/Better Stack) is linked from the site, docs,
+    security page or llms.txt index.
+
+sla:
+  api_uptime_sla: null
+  published: false
+  security_response_sla: >-
+    Five business days for security questionnaires and DPA requests, routed to a dedicated
+    security alias. This is a commercial-response SLA, not an API availability SLA.
+  source: https://kosmoslabs.ai/resources/security/
+
+changelog:
+  published: false
+  url: null
+  evidence: >-
+    https://kosmoslabs.ai/changelog returns 404 (probed 2026-07-19); the docs llms.txt index lists
+    twelve pages, none of which is a changelog or release-notes page.
+
+data_lifecycle:
+  raw_signal_retention: 7 days (raw traces, logs and metrics)
+  correlation_cadence: 15 minutes
+  source: https://docs.kosmoslabs.ai/product-documentation/integration-limits

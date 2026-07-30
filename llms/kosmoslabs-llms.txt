@@ -1,0 +1,16 @@
+# Kosmos Documentation
+
+## KOSMOS Documentation
+
+- [Getting Started](https://docs.kosmoslabs.ai/product-documentation/readme.md): What to expect after connecting your systems
+- [Security Overview](https://docs.kosmoslabs.ai/product-documentation/security-overview.md): Machines propose. Humans confirm. That trust model extends to every layer of how Kosmos handles your data — from integration scopes to infrastructure to our path toward SOC 2.
+- [KOSMOS Platform Overview](https://docs.kosmoslabs.ai/product-documentation/kosmos-platform-overview.md): Operational intelligence for customer-impacting incidents.
+- [Understanding Results](https://docs.kosmoslabs.ai/product-documentation/understanding-results.md): How to interpret Risk Events and RCA Reports
+- [Integration Permissions](https://docs.kosmoslabs.ai/product-documentation/integration-permissions.md): How Kosmos connects to your systems securely
+- [Integration Limits](https://docs.kosmoslabs.ai/product-documentation/integration-limits.md): System limits and rate constraints by integration
+- [Connecting OpenTelemetry (Preview)](https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview.md): Step-by-step guide to connecting OpenTelemetry observability data
+- [Connecting GitLab](https://docs.kosmoslabs.ai/product-documentation/connecting-gitlab.md): Step-by-step guide to connecting GitLab
+- [Connecting Azure DevOps](https://docs.kosmoslabs.ai/product-documentation/connecting-azure-devops.md): Step-by-step guide to connecting Azure DevOps
+- [Connecting Salesforce](https://docs.kosmoslabs.ai/product-documentation/connecting-salesforce.md): Step-by-step guide to connecting Salesforce Service Cloud
+- [Privacy Policy](https://docs.kosmoslabs.ai/legal/privacy-policy.md): How Kosmos collects, uses, and protects your data
+- [Terms of Service](https://docs.kosmoslabs.ai/legal/terms-of-service.md): Terms governing your use of Kosmos

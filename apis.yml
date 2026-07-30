@@ -1,27 +1,134 @@
 aid: kosmoslabs
-name: Kosmoslabs
-description: 'Kosmoslabs is a company surfaced as a portfolio company of norwest-venture-partners and
-  added to the API Evangelist network as a stub for enrichment. Sector: unknown. This profile is a lead
-  awaiting the enrichment pipeline.'
+name: Kosmos AI Labs
+description: >-
+  Kosmos AI Labs builds an operational intelligence platform that correlates signals across
+  fragmented enterprise systems — Jira, Salesforce Service Cloud, GitHub, ServiceNow, Zendesk,
+  Linear, Bitbucket, Azure DevOps, Pylon and OpenTelemetry — to surface Risk Events with ranked
+  causes and supporting evidence for customer-impacting incidents. The platform operates on a
+  "machines propose, humans confirm" trust model: it proposes root-cause analysis in under sixty
+  seconds and a human confirms, building organizational memory that keeps incidents from
+  recurring. Its public developer surface is an OpenTelemetry (OTLP) ingest API at
+  ingest.kosmoslabs.ai accepting traces, metrics and logs over HTTP and gRPC, authenticated with
+  a kos_-prefixed API key; every other system is connected through read-only OAuth integration
+  scopes rather than a public REST API.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kosmoslabs.ai/wp-content/themes/kosmoslabs/assets/images/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/kosmoslabs/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - norwest-venture-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: otlp-ingest-api-documented
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-- Unknown
-apis: []
+- Operational Intelligence
+- Observability
+- OpenTelemetry
+- Incident Management
+- Root Cause Analysis
+- AIOps
+- Enterprise Software
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: kosmoslabs:otlp-ingest
+  name: Kosmos OTLP Ingest API
+  description: >-
+    OpenTelemetry Protocol (OTLP) ingest endpoint for sending traces, metrics and logs into the
+    Kosmos operational intelligence platform. Accepts OTLP over HTTP (primary) and gRPC
+    (alternative), authenticated with an X-Kosmos-API-Key header carrying a kos_-prefixed API key
+    generated in platform settings. Published as a Preview integration.
+  humanURL: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+  baseURL: https://ingest.kosmoslabs.ai
+  tags:
+  - OpenTelemetry
+  - OTLP
+  - Observability
+  - Traces
+  - Metrics
+  - Logs
+  properties:
+  - type: Documentation
+    url: https://docs.kosmoslabs.ai/product-documentation/connecting-opentelemetry-preview
+  - type: Authentication
+    url: authentication/kosmoslabs-authentication.yml
+  - type: RateLimits
+    url: rate-limits/kosmoslabs-rate-limits.yml
+  - type: Conventions
+    url: conventions/kosmoslabs-conventions.yml
+  - type: ErrorCatalog
+    url: errors/kosmoslabs-problem-types.yml
 common:
 - type: Website
   url: https://kosmoslabs.ai
+- type: Documentation
+  url: https://docs.kosmoslabs.ai
+- type: GettingStarted
+  url: https://docs.kosmoslabs.ai/product-documentation/readme
+- type: Blog
+  url: https://kosmoslabs.ai/resources/blog/
+- type: SignUp
+  url: https://kosmoslabs.ai/#contact
+- type: Login
+  url: https://app.kosmoslabs.ai/
+- type: Support
+  url: mailto:support@kosmoslabs.ai
+- type: TermsOfService
+  url: https://docs.kosmoslabs.ai/legal/terms-of-service
+- type: PrivacyPolicy
+  url: https://docs.kosmoslabs.ai/legal/privacy-policy
+- type: Security
+  url: https://kosmoslabs.ai/resources/security/
+- type: Compliance
+  url: https://trust.kosmoslabs.ai/
+- type: TrustCenter
+  url: https://trust.kosmoslabs.ai/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/kosmosailabs/
+- type: LLMsTxt
+  url: llms/kosmoslabs-llms.txt
+- type: Authentication
+  url: authentication/kosmoslabs-authentication.yml
+- type: Conventions
+  url: conventions/kosmoslabs-conventions.yml
+- type: RateLimits
+  url: rate-limits/kosmoslabs-rate-limits.yml
+- type: Conformance
+  url: conformance/kosmoslabs-conformance.yml
+- type: ErrorCatalog
+  url: errors/kosmoslabs-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/kosmoslabs-lifecycle.yml
+- type: Packages
+  url: packages/kosmoslabs-packages.yml
+- type: WellKnown
+  url: well-known/kosmoslabs-well-known.yml
+- type: DomainSecurity
+  url: security/kosmoslabs-domain-security.yml
+- type: TrustCenter
+  url: security/kosmoslabs-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/kosmoslabs-vulnerability-disclosure.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

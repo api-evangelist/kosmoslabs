@@ -11,6 +11,17 @@ description: >-
   ingest.kosmoslabs.ai accepting traces, metrics and logs over HTTP and gRPC, authenticated with
   a kos_-prefixed API key; every other system is connected through read-only OAuth integration
   scopes rather than a public REST API.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
